@@ -1,0 +1,15 @@
+model,task,status,error,export_s,source,res,batch,opset,n_nodes,n_op_types,size_mb,torch_top1,recipe_hash,parity_max_abs_diff,parity_top1_agree,parity_cosine
+efficientnet_b0,classification,ok,,1.8,timm,224.0,1.0,13.0,239.0,8.0,15.75,79.78,f7913ccc,1.430511474609375e-06,1.0,1.0
+efficientnet_lite0,classification,ok,,0.7,timm,224.0,1.0,13.0,160.0,7.0,13.3,75.04,f7913ccc,3.814697265625e-06,1.0,1.00000003973643
+ghostnet_100,classification,ok,,0.8,timm,224.0,1.0,13.0,369.0,12.0,15.42,76.12,f7913ccc,4.172325134277344e-06,1.0,1.0000000198682149
+ghostnetv2_100,classification,ok,,1.4,timm,224.0,1.0,13.0,708.0,19.0,19.13,76.8,f7913ccc,2.86102294921875e-06,1.0,1.0
+ghostnetv3_100,classification,ok,,2.1,timm,224.0,1.0,13.0,1090.0,20.0,26.71,74.84,f7913ccc,4.76837158203125e-06,1.0,1.0
+mobilenetv1_100,classification,ok,,0.4,timm,224.0,1.0,13.0,111.0,6.0,12.61,75.32,f7913ccc,3.576278686523437e-06,1.0,1.0
+mobilenetv2_100,classification,ok,,0.4,timm,224.0,1.0,13.0,170.0,7.0,8.94,73.94,f7913ccc,3.337860107421875e-06,1.0,1.00000003973643
+mobilenetv3_large_100,classification,ok,,0.7,timm,224.0,1.0,13.0,161.0,9.0,16.51,75.36,f7913ccc,3.933906555175781e-06,1.0,0.9999999602635702
+mobilenetv3_small_100,classification,ok,,0.3,timm,224.0,1.0,13.0,141.0,9.0,6.19,68.28,f7913ccc,6.318092346191406e-06,1.0,1.00000003973643
+mobilenetv4_conv_small,classification,ok,,0.3,timm,224.0,1.0,13.0,89.0,6.0,9.97,69.58,f7913ccc,2.86102294921875e-06,1.0,1.00000003973643
+mobilenetv4_hybrid_medium,classification,ok,,2.3,timm,224.0,1.0,14.0,499.0,19.0,37.83,76.24,f7913ccc,2.86102294921875e-06,1.0,0.9999999602635702
+shufflenet_v2_x1_0,classification,ok,,1.6,torchvision,224.0,1.0,13.0,374.0,15.0,5.2,71.24,f7913ccc,3.814697265625e-06,1.0,1.0
+squeezenet1_0,classification,ok,,0.3,torchvision,224.0,1.0,13.0,65.0,6.0,3.02,65.08,f7913ccc,7.152557373046875e-07,1.0,1.00000003973643
+squeezenet1_1,classification,ok,,0.2,torchvision,224.0,1.0,13.0,65.0,6.0,2.97,62.68,f7913ccc,2.86102294921875e-06,1.0,1.0000000198682149

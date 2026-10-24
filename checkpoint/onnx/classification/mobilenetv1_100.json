@@ -1,0 +1,37 @@
+{
+  "model": "mobilenetv1_100",
+  "task": "classification",
+  "status": "ok",
+  "error": "",
+  "source": "timm",
+  "res": 224,
+  "batch": 1,
+  "opset": 13,
+  "n_nodes": 111,
+  "n_op_types": 6,
+  "size_mb": 12.61,
+  "torch_top1": 75.32,
+  "recipe_hash": "f7913ccc",
+  "parity_max_abs_diff": 3.5762786865234375e-06,
+  "parity_top1_agree": 1.0,
+  "parity_cosine": 1.0,
+  "exported_at": "2026-10-24 13:26:51",
+  "torch_version": "2.8.0+cu128",
+  "source_checkpoint": "checkpoint/pytorch/classification/mobilenetv1_100.pt",
+  "input_shape": [
+    1,
+    3,
+    224,
+    224
+  ],
+  "dynamic_batch": false,
+  "num_classes": 100,
+  "op_types": {
+    "Constant": 54,
+    "Conv": 27,
+    "Clip": 27,
+    "GlobalAveragePool": 1,
+    "Flatten": 1,
+    "Gemm": 1
+  }
+}
