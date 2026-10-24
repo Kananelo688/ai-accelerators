@@ -1,6 +1,7 @@
 # dataset folder ( we don't want to track them)
 datasets/
-
+data\cnn-train-data\_debug
+checkpoint\pytorch\_debug
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[codz]
