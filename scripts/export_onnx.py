@@ -136,7 +136,7 @@ def extract_state_dict(ck: dict) -> dict:
         # mistake a metadata dict (e.g. the config) for weights.
         if isinstance(sd, dict) and sd and all(torch.is_tensor(v) for v in sd.values()):
             return sd
-    # Last resort: the checkpoint IS the state_dict.
+    # Last resort: the checkpoint IS the state_dict.(It doesn't have meta data, possible for external repos)
     if ck and all(torch.is_tensor(v) for v in ck.values()):
         return ck
     raise KeyError(f"no state_dict found; top-level keys = {list(ck)[:10]}")
@@ -187,7 +187,8 @@ def infer_num_classes(sd: dict) -> Optional[int]:
 # architecture name and how it was constructed, which our training notebook stored in the
 # checkpoint (name / source / kwargs / num_classes). That is exactly why those fields were saved.
 def build_model(name: str, source: Optional[str], num_classes: int, kwargs: dict):
-    """Instantiate the architecture. Mirrors build_model() in the training notebook.
+    """
+    Instantiate the architecture. Mirrors build_model() in the training notebook.
 
     Imports are done lazily so that a task whose models come from neither library (a future
     external-repo detector, say) does not pay for importing timm.
@@ -204,7 +205,10 @@ def build_model(name: str, source: Optional[str], num_classes: int, kwargs: dict
 
 
 def rebuild_from_checkpoint(ck: dict, fallback_name: str):
-    """Rebuild the trained module from a checkpoint. Returns (model_in_eval_mode, metadata)."""
+    """
+        Rebuild the trained module from a checkpoint. Returns (model_in_eval_mode, metadata).
+    
+    """
     cfg = get_config(ck)
     # Fall back to the filename if the checkpoint has no "name" field - true for third-party
     # weights, where the filename is usually the only clue to the architecture.
@@ -239,7 +243,8 @@ def rebuild_from_checkpoint(ck: dict, fallback_name: str):
 
 
 def resolve_resolution(meta: dict, override: Optional[int]) -> int:
-    """Decide the ONNX input resolution.
+    """
+    Decide the ONNX input resolution.
 
     Priority: --res flag > the checkpoint's eval_res > the default.
     We use EVAL resolution, not train resolution: 160 was a training-budget choice, while the
@@ -286,6 +291,7 @@ def export_onnx(model, out_path: Path, res: int, batch: int, opset: int,
         # effect here is folding BatchNorm into the preceding convolution, which is what the
         # accelerator compilers expect to see and what the published MAC counts assume.
         do_constant_folding=True,
+        
         dynamic_axes=dynamic_axes,
         # Use the legacy TorchScript exporter rather than the newer dynamo path: it is the one
         # the edge toolchains have been tested against, and it produces flatter graphs.
@@ -318,7 +324,8 @@ def check_graph(path: Path) -> dict:
 
 
 def verify_parity(model, path: Path, res: int, batch: int, n_trials: int = 3) -> dict:
-    """Run PyTorch and ONNX Runtime on identical inputs and compare the outputs.
+    """
+    Run PyTorch and ONNX Runtime on identical inputs and compare the outputs.
 
     This is the step that catches a BROKEN export - an op that traced incorrectly, a frozen
     branch, a wrong input layout. Without it a corrupted graph would sail through to the
@@ -399,7 +406,7 @@ def export_one(pt_path: Path, out_dir: Path, args) -> dict:
             **{f"parity_{k}": v for k, v in parity.items()},
         )
 
-        # A warning rather than a failure: tiny numerical differences are normal (different
+        # A warning: tiny numerical differences are normal (different
         # kernels, different accumulation order), but disagreement on the ARGMAX is not.
         if parity and parity["top1_agree"] < 1.0:
             row["error"] = "WARNING: top-1 disagreement between PyTorch and ONNX Runtime"
